@@ -3,7 +3,7 @@ use rw102;
 
 CREATE TABLE department
 (
-    department_id   INT AUTO_INCREMENT PRIMARY KEY,
+    department_id   INT AUTO_INCREMENT PRIMARY KEY,  -- 2
     department_name VARCHAR(100) UNIQUE NOT NULL
 );
 
@@ -21,8 +21,8 @@ CREATE TABLE account
     email         VARCHAR(100) UNIQUE NOT NULL,
     username      VARCHAR(100) UNIQUE NOT NULL,
     full_name     VARCHAR(100)        NOT NULL,
-    department_id INT                 NOT NULL,
-    position_id   INT                 NOT NULL,
+    department_id INT,  
+    position_id   INT,
     created_date  TIMESTAMP DEFAULT current_timestamp,
 
     -- Check mail
@@ -33,6 +33,7 @@ CREATE TABLE account
     -- Foreign key
     CONSTRAINT fk_account_department
         FOREIGN KEY (department_id) REFERENCES department (department_id),
+						-- 1				BẢNG LIÊN QUAN-- 2
     CONSTRAINT fk_account_position
         FOREIGN KEY (position_id) REFERENCES position (position_id)
 );
@@ -43,7 +44,7 @@ CREATE TABLE group_table
     group_id     INT AUTO_INCREMENT PRIMARY KEY,
     group_name   VARCHAR(50) UNIQUE NOT NULL,
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    creator_id   INT                NOT NULL,
+    creator_id   INT,
 
     -- Foreign key
     CONSTRAINT fk_group_creator
@@ -89,9 +90,9 @@ CREATE TABLE question
 (
     question_id  INT AUTO_INCREMENT PRIMARY KEY,
     content      TEXT,
-    category_id  INT NOT NULL,
-    type_id      INT NOT NULL,
-    creator_id   INT NOT NULL,
+    category_id  INT ,
+    type_id      INT ,
+    creator_id   INT ,
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     -- Foreign key
@@ -123,9 +124,9 @@ CREATE TABLE exam
     exam_id      INT AUTO_INCREMENT PRIMARY KEY,
     code         varchar(50) NOT NULL UNIQUE,
     title        varchar(50),
-    category_id  INT         NOT NULL,
+    category_id  INT,
     duration     INT,
-    creator_id   INT         NOT NULL,
+    creator_id   INT,
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     -- Foreign key
