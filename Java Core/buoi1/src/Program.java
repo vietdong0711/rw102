@@ -47,17 +47,24 @@ public class Program {
         account1.department = department1;
         account1.position = position1;
         account1.createDate = LocalDate.now();
+        Account[] accounts = new  Account[]{account1, account1, account1};
 
-        System.out.println("Account ID: " + account1.id);
-        System.out.println("Username: " + account1.username);
-        System.out.println("FullName: " + account1.fullName);
-        System.out.println("Email: " + account1.email);
-        System.out.println("CreateDate: " + account1.createDate);
-        System.out.println("Department ID: " + account1.department.id);
-        System.out.println("Department Name: " + account1.department.name);
-        System.out.println("Position ID: " + account1.position.id);
-        System.out.println("Position Name: " + account1.position.name);
-        System.out.println("=======================");
+//        Question 14:
+//        In ra thông tin tất cả các account có id < 4
+        for (Account account : accounts) {
+            if (account.id < 4) {
+                // in thông tin
+            }
+        }
+//
+//        Question 15:
+//        In ra các số chẵn nhỏ hơn hoặc bằng 20
+        for (int i = 0; i < 20; i++) {
+            if (i %2 == 0) {
+                System.out.println(i);
+            }
+        }
+
 
     }
 }
