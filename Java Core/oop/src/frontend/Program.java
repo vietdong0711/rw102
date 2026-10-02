@@ -17,10 +17,11 @@ public class Program {
         while (true) {
             System.out.println("==== Mời bạn chọn chức năng ====");
             System.out.println("1. Thêm mới cán bộ.");
-            System.out.println("2. Tìm kiếm theo họ tên.");
-            System.out.println("3. Hiển thị toàn bộ các cán bộ.");
-            System.out.println("4. Nhập vào tên của cán bộ và delete cán bộ đó.");
-            System.out.println("5. Thoát khỏi chương trình.");
+            System.out.println("2. Tìm kiếm theo họ tên.");//
+            System.out.println("3. Hiển thị toàn bộ các cán bộ.");//
+            System.out.println("4. Nhập vào tên của cán bộ và xóa cán bộ đó.");// nhập đúng tên
+            System.out.println("5. Update tên địa chỉ theo tên(nhập đúng).");
+            System.out.println("6. Thoát khỏi chương trình.");
             String choice = sc.nextLine();
             switch (choice) {
                 case "1":
@@ -36,6 +37,9 @@ public class Program {
                     iqlcb.xoaTheoTen();
                     break;
                 case "5":
+                    iqlcb.updateDiaChiTheoTen();
+                    break;
+                case "6":
                     System.out.println("Thoát.");
                     System.exit(0);
                 default:
