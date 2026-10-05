@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ICanBoService {
     List<CanBo> findAll();
+
+    List<CanBo> findByName(String ten);
 }

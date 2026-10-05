@@ -16,4 +16,8 @@ public class CanBoController {
         // goi den service dể lây dữ liệu
         return canBoService.findAll();
     }
+
+    public List<CanBo> findByName(String ten) {
+        return canBoService.findByName(ten);
+    }
 }

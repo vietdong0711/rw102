@@ -18,4 +18,9 @@ public class CanBoServiceImpl implements ICanBoService {
     public List<CanBo> findAll() {
         return repository.findAll();
     }
+
+    @Override
+    public List<CanBo> findByName(String ten) {
+        return repository.findByName(ten);
+    }
 }

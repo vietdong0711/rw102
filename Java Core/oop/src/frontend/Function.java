@@ -10,9 +10,11 @@ import java.util.Scanner;
 
 public class Function {
     private CanBoController canBoController;
+    private Scanner sc;
 
     public Function() {
         this.canBoController = new CanBoController();
+        this.sc = new Scanner(System.in);
     }
 
     // them mới
@@ -34,6 +36,25 @@ public class Function {
     }
 
     // tim kiem
+    public void timKiem(){
+        System.out.println("==== TÌM KIẾM CÁN BỘ ====");
+        System.out.println("Nhập họ tên cần tìm: ");
+        String ten = sc.nextLine();
+        List<CanBo> canBos = canBoController.findByName(ten);
+
+        if (canBos.isEmpty()) {//canBos.size() == 0
+            System.out.println("Không có kết quả tương ứng!");
+        } else {
+            System.out.println("+-------------------------+-----+----------+--------------------+");
+            System.out.printf("|%25s|%5s|%10s|%20s|\n", "Họ tên", "Tuổi", "Giới tính", "Địa chỉ");
+            System.out.println("+-------------------------+-----+----------+--------------------+");
+            for (CanBo cb : canBos) {
+                System.out.printf("|%25s|%5s|%10s|%20s|\n", cb.getHoTen(), cb.getTuoi(), cb.getGioiTinh(), cb.getDiaChi());
+            }
+            System.out.println("+-------------------------+-----+----------+--------------------+");
+        }
+
+    }
 
     // xoa
 
@@ -54,6 +75,7 @@ public class Function {
                 case "1":
                     break;
                 case "2":
+                    this.timKiem();
                     break;
                 case "3":
                     this.hienThiToanBo();
