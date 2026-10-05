@@ -18,6 +18,9 @@ public class Function {
     }
 
     // them mới
+    public void themMoi() {
+
+    }
 
     // hien thi
     public void hienThiToanBo() {
@@ -72,6 +75,21 @@ public class Function {
 
 
     // update
+    public void updateByName() {
+        System.out.println("==== UPDATE ĐỊA CHỈ THEO TÊN ====");
+        System.out.println("Nhập họ tên cần update: ");// like 'abc'
+        String ten = sc.nextLine();
+
+        System.out.println("Nhập địa chỉ cần update: ");
+        String diaChi = sc.nextLine();
+
+        boolean check = canBoController.updateByName(ten, diaChi);
+        if (check) {
+            System.out.println("Update thành công");
+        } else {
+            System.out.println("Update không thành công");
+        }
+    }
 
     public void menu() {
         Scanner sc = new Scanner(System.in);
@@ -81,11 +99,12 @@ public class Function {
             System.out.println("2. Tìm kiếm theo họ tên.");//
             System.out.println("3. Hiển thị toàn bộ các cán bộ.");//
             System.out.println("4. Nhập vào tên của cán bộ và xóa cán bộ đó.");// nhập đúng tên
-            System.out.println("5. Update tên địa chỉ theo tên(nhập đúng).");
+            System.out.println("5. Update địa chỉ theo tên(nhập đúng).");
             System.out.println("6. Thoát khỏi chương trình.");
             String choice = sc.nextLine();
             switch (choice) {
                 case "1":
+                    this.themMoi();
                     break;
                 case "2":
                     this.timKiem();
@@ -97,6 +116,7 @@ public class Function {
                     this.deleteByName();
                     break;
                 case "5":
+                    this.updateByName();
                     break;
                 case "6":
                     System.out.println("Thoát.");

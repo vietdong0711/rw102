@@ -24,4 +24,8 @@ public class CanBoController {
     public boolean deleteByName(String ten) {
         return canBoService.deleteByName(ten);
     }
+
+    public boolean updateByName(String ten, String diaChi) {
+        return canBoService.updateByName(ten, diaChi);
+    }
 }

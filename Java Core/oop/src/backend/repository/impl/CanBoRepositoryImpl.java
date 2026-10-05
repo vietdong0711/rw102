@@ -113,4 +113,23 @@ public class CanBoRepositoryImpl implements ICanBoRepository {
         }
         return false;
     }
+
+    @Override
+    public boolean updateByName(String ten, String diaChi) {
+        try {
+            Connection connection = JDBCUtils.getConnection();
+            String sql = "update can_bo SET dia_chi = ? where ho_ten = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, diaChi);
+            preparedStatement.setString(2, ten);
+
+            int c = preparedStatement.executeUpdate();
+            return c > 0;
+        } catch (Exception e) {
+            e.printStackTrace();// hiển thị ra lỗi
+        } finally {// cụm này luôn thực hien cuối cùng
+            JDBCUtils.closeConnection();
+        }
+        return false;
+    }
 }

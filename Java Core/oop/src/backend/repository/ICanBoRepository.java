@@ -10,4 +10,6 @@ public interface ICanBoRepository {
     List<CanBo> findByName(String ten);
 
     boolean deleteByName(String ten);
+
+    boolean updateByName(String ten, String diaChi);
 }
