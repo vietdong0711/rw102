@@ -90,4 +90,27 @@ public class CanBoRepositoryImpl implements ICanBoRepository {
         }
         return canBos;
     }
+
+    @Override
+    public boolean deleteByName(String ten) {
+        try {
+            Connection connection = JDBCUtils.getConnection();
+            String sql = "DELETE FROM can_bo WHERE ho_ten like ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, ten);
+
+            int c = preparedStatement.executeUpdate();
+//            if (c > 0) {
+//                return true;
+//            } else {
+//                return false;
+//            }
+            return c > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {// cụm này luôn thực hien cuối cùng
+            JDBCUtils.closeConnection();
+        }
+        return false;
+    }
 }

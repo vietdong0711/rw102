@@ -23,4 +23,9 @@ public class CanBoServiceImpl implements ICanBoService {
     public List<CanBo> findByName(String ten) {
         return repository.findByName(ten);
     }
+
+    @Override
+    public boolean deleteByName(String ten) {
+        return repository.deleteByName(ten);
+    }
 }

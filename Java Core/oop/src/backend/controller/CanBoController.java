@@ -20,4 +20,8 @@ public class CanBoController {
     public List<CanBo> findByName(String ten) {
         return canBoService.findByName(ten);
     }
+
+    public boolean deleteByName(String ten) {
+        return canBoService.deleteByName(ten);
+    }
 }

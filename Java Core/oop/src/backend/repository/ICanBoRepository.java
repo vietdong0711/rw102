@@ -8,4 +8,6 @@ public interface ICanBoRepository {
     List<CanBo> findAll();
 
     List<CanBo> findByName(String ten);
+
+    boolean deleteByName(String ten);
 }

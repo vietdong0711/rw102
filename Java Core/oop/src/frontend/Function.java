@@ -57,6 +57,19 @@ public class Function {
     }
 
     // xoa
+    public void deleteByName() {
+        System.out.println("==== XÓA CÁN BỘ ====");
+        System.out.println("Nhập họ tên cần xóa: ");// like 'abc'
+        String ten = sc.nextLine();
+        boolean check = canBoController.deleteByName(ten);
+
+        if (check) {
+            System.out.println("Xóa thành công");
+        } else {
+            System.out.println("Xóa không thành công");
+        }
+    }
+
 
     // update
 
@@ -81,6 +94,7 @@ public class Function {
                     this.hienThiToanBo();
                     break;
                 case "4":
+                    this.deleteByName();
                     break;
                 case "5":
                     break;
