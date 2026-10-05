@@ -1,3 +1,7 @@
+package backend;
+
+import entity.Group;
+
 import java.util.Scanner;
 
 public class Exercise4 {
@@ -137,14 +141,14 @@ public class Exercise4 {
     public static void question8(Group[] groups) {
         System.out.println("Mời bạn nhập tên group muốn tìm: ");
         String name = scanner.nextLine();
-        // 'Java 1'    'Group Java 2026'   'Java'
+        // 'Java 1'    'entity.Group Java 2026'   'Java'
         System.out.println("+-----+--------------------+---------------+");
-        System.out.printf("|%5s|%20s|%15s|\n", "ID", "Group name", "Created Date");
+        System.out.printf("|%5s|%20s|%15s|\n", "ID", "entity.Group name", "Created Date");
         System.out.println("+-----+--------------------+---------------+");
         for (Group group : groups) {
-            if (group.name.contains(name)) {
-                System.out.printf("|%5s|%20s|%15s|\n", group.id, group.name, group.createDate);
-            }
+//            if (group.name.contains(name)) {
+//                System.out.printf("|%5s|%20s|%15s|\n", group.id, group.name, group.createDate);
+//            }
         }
         System.out.println("+-----+--------------------+---------------+");
 

@@ -1,4 +1,6 @@
-import java.util.Arrays;
+package backend;
+
+import entity.Department;
 
 public class Exercise5 {
 
