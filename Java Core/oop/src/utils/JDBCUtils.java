@@ -11,7 +11,7 @@ public class JDBCUtils {
     public static Connection getConnection() {
         String url = "jdbc:mysql://localhost:3306/qlcb";
         String username = "root";
-        String password = "root";
+        String password = "dong";
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url, username, password);

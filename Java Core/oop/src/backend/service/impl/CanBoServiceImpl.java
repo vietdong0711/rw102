@@ -1,0 +1,21 @@
+package backend.service.impl;
+
+import backend.repository.ICanBoRepository;
+import backend.repository.impl.CanBoRepositoryImpl;
+import backend.service.ICanBoService;
+import entity.CanBo;
+
+import java.util.List;
+
+public class CanBoServiceImpl implements ICanBoService {
+    private ICanBoRepository repository;
+
+    public CanBoServiceImpl() {
+        repository = new CanBoRepositoryImpl();
+    }
+
+    @Override
+    public List<CanBo> findAll() {
+        return repository.findAll();
+    }
+}
