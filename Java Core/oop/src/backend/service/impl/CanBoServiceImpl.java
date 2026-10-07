@@ -38,4 +38,9 @@ public class CanBoServiceImpl implements ICanBoService {
     public boolean save(CanBo canBo) {
         return repository.save(canBo);
     }
+
+    @Override
+    public boolean existByName(String hoTen) {
+        return repository.existByName(hoTen);
+    }
 }

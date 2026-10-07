@@ -1,7 +1,5 @@
 package frontend;
 
-import backend.IQLCB;
-import backend.QLCB;
 import backend.controller.CanBoController;
 import entity.CanBo;
 import entity.CongNhan;
@@ -27,7 +25,23 @@ public class Function {
         System.out.println("==== THÊM MỚI CÁN BỘ ====");
         // nhập dữ liệu chung
         System.out.print("Nhập họ tên: ");
-        String hoTen = sc.nextLine();
+        String hoTen;
+        while (true) {
+            hoTen = sc.nextLine();
+            // check độ dài
+            if (hoTen.length() < 5 || hoTen.length() > 50) {
+                System.err.println("Họ tên từ 5 đến 50 kí tự! Nhập lại");
+                continue;
+            }
+            // check xem họ tên này đã tồn tại chưa
+            boolean check = canBoController.existByName(hoTen);
+            if (check) {
+                System.err.println("Họ tên này đã tồn tại! Nhập lại");
+                continue;
+            }
+            break;
+        }
+
         System.out.print("Nhập tuổi: ");
         int tuoi = 0;
         while (true) {
@@ -39,6 +53,8 @@ public class Function {
                 sc.nextLine();
                 if (tuoi <= 0) {
                     System.err.println("Vui lòng nhập số nguyên dương!");
+                } if (tuoi > 150) {
+                    System.err.println("Vui lòng nhập tuổi nhỏ hơn 150!");
                 } else {
                     break;
                 }
@@ -58,7 +74,15 @@ public class Function {
                 gioiTinh = GioiTinh.KHAC;
         }
         System.out.print("Nhập địa chỉ: ");
-        String diaChi = sc.nextLine();
+        String diaChi;
+        while (true) {
+            diaChi = sc.nextLine();
+            if (diaChi.length() < 5 || diaChi.length() > 100) {
+                System.err.println("Địa chỉ từ 5 đến 100 kí tự! Nhập lại");
+                continue;
+            }
+            break;
+        }
         // chọn loai cán bộ
         String congViec = null;
         int bac = 0;
@@ -87,12 +111,26 @@ public class Function {
                 break;
             case "2":
                 System.out.print("Nhập ngành đào tạo: ");
-                nganh = sc.nextLine();
+                while (true) {
+                    nganh = sc.nextLine();
+                    if (nganh.length() < 5 || nganh.length() > 50) {
+                        System.err.println("Ngành đào tạo từ 5 đến 50 kí tự! Nhập lại");
+                        continue;
+                    }
+                    break;
+                }
                 canBo = new KySu(hoTen, tuoi, gioiTinh, diaChi, Loai.KS, nganh);
                 break;
             default:
                 System.out.print("Nhập công việc: ");
-                congViec = sc.nextLine();
+                while (true) {
+                    congViec = sc.nextLine();
+                    if (congViec.length() < 5 || congViec.length() > 50) {
+                        System.err.println("Công việc từ 5 đến 50 kí tự! Nhập lại");
+                        continue;
+                    }
+                    break;
+                }
                 canBo = new NhanVien(hoTen, tuoi, gioiTinh, diaChi, Loai.NV, congViec);
         }
         // sau khi nhap cac thông tin thì sẽ dc 1 canBo

@@ -14,4 +14,6 @@ public interface ICanBoRepository {
     boolean updateByName(String ten, String diaChi);
 
     boolean save(CanBo canBo);
+
+    boolean existByName(String hoTen);
 }

@@ -32,4 +32,8 @@ public class CanBoController {
     public boolean save(CanBo canBo) {
         return canBoService.save(canBo);
     }
+
+    public boolean existByName(String hoTen) {
+        return canBoService.existByName(hoTen);
+    }
 }
