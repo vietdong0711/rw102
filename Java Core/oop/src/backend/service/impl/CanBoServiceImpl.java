@@ -33,4 +33,9 @@ public class CanBoServiceImpl implements ICanBoService {
     public boolean updateByName(String ten, String diaChi) {
         return repository.updateByName(ten, diaChi);
     }
+
+    @Override
+    public boolean save(CanBo canBo) {
+        return repository.save(canBo);
+    }
 }

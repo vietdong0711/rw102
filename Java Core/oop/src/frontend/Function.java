@@ -4,6 +4,11 @@ import backend.IQLCB;
 import backend.QLCB;
 import backend.controller.CanBoController;
 import entity.CanBo;
+import entity.CongNhan;
+import entity.GioiTinh;
+import entity.KySu;
+import entity.Loai;
+import entity.NhanVien;
 
 import java.util.List;
 import java.util.Scanner;
@@ -19,6 +24,84 @@ public class Function {
 
     // them mới
     public void themMoi() {
+        System.out.println("==== THÊM MỚI CÁN BỘ ====");
+        // nhập dữ liệu chung
+        System.out.print("Nhập họ tên: ");
+        String hoTen = sc.nextLine();
+        System.out.print("Nhập tuổi: ");
+        int tuoi = 0;
+        while (true) {
+            if (!sc.hasNextInt()) {
+                sc.nextLine();
+                System.err.println("Vui lòng nhập số nguyên dương!");
+            } else {
+                tuoi = sc.nextInt();
+                sc.nextLine();
+                if (tuoi <= 0) {
+                    System.err.println("Vui lòng nhập số nguyên dương!");
+                } else {
+                    break;
+                }
+            }
+        }
+        System.out.print("Nhập giới tính: 1. NAM     2.NU     khác. KHAC ");
+        String gt = sc.nextLine();
+        GioiTinh gioiTinh;
+        switch (gt) {
+            case "1":
+                gioiTinh = GioiTinh.NAM;
+                break;
+            case "2":
+                gioiTinh = GioiTinh.NU;
+                break;
+            default:
+                gioiTinh = GioiTinh.KHAC;
+        }
+        System.out.print("Nhập địa chỉ: ");
+        String diaChi = sc.nextLine();
+        // chọn loai cán bộ
+        String congViec = null;
+        int bac = 0;
+        String nganh = null;
+        CanBo canBo = null;
+        System.out.print("Nhập loại cán bộ: 1. Công nhân     2.Kỹ sư     khác. Nhân viên ");
+        String choice = sc.nextLine();
+        switch (choice) {
+            case "1":
+                System.out.print("Nhập bậc: ");
+                while (true) {
+                    if (!sc.hasNextInt()) {
+                        sc.nextLine();
+                        System.err.println("Vui lòng nhập số nguyên dương!");
+                    } else {
+                        bac = sc.nextInt();
+                        sc.nextLine();
+                        if (bac < 1 || bac > 10) {
+                            System.err.println("Vui lòng nhập số >= 1 và <= 10!");
+                        } else {
+                            break;
+                        }
+                    }
+                }
+                canBo = new CongNhan(hoTen, tuoi, gioiTinh, diaChi, Loai.CN, bac);
+                break;
+            case "2":
+                System.out.print("Nhập ngành đào tạo: ");
+                nganh = sc.nextLine();
+                canBo = new KySu(hoTen, tuoi, gioiTinh, diaChi, Loai.KS, nganh);
+                break;
+            default:
+                System.out.print("Nhập công việc: ");
+                congViec = sc.nextLine();
+                canBo = new NhanVien(hoTen, tuoi, gioiTinh, diaChi, Loai.NV, congViec);
+        }
+        // sau khi nhap cac thông tin thì sẽ dc 1 canBo
+        boolean check = canBoController.save(canBo);
+        if (check) {
+            System.out.println("Thêm mới thành công!");
+        } else {
+            System.out.println("Thêm mới thất bại!");
+        }
 
     }
 

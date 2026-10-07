@@ -12,4 +12,6 @@ public interface ICanBoService {
     boolean deleteByName(String ten);
 
     boolean updateByName(String ten, String diaChi);
+
+    boolean save(CanBo canBo);
 }
