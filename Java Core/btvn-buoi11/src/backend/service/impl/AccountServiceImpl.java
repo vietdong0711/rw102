@@ -49,4 +49,9 @@ public class AccountServiceImpl implements IAccountService {
     public boolean checkIdExists(int id) {
         return accountRepository.checkIdExists(id);
     }
+
+    @Override
+    public List<Account> findByUsername(String username) {
+        return accountRepository.findByUsername(username);
+    }
 }

@@ -31,7 +31,8 @@ public class AccountFunction {
             System.out.println("2. Thêm account");
             System.out.println("3. Xóa account theo id");
             System.out.println("4. Update account theo id");
-            System.out.println("5. Thoát");
+            System.out.println("5. Tìm kiếm theo username");
+            System.out.println("6. Thoát");
             String choice = scanner.nextLine();
             switch (choice) {
                 case "1":
@@ -47,11 +48,37 @@ public class AccountFunction {
                     this.update();
                     break;
                 case "5":
+                    this.findByUsername();
+                case "6":
                     return;
 //                    System.exit(0);
                 default:
                     System.out.println("Chọn sai! Chọn lại!");
             }
+        }
+    }
+
+    private void findByUsername() {
+        System.out.println("==== CHỨC NĂNG UPDATE ACCOUNT ====");
+        System.out.println("Mời bạn nhập Username muốn tìm: ");
+        String username = scanner.nextLine();
+
+        List<Account> accounts = accountController.findByUsername(username);
+
+        if (accounts.isEmpty()) {// ds trống
+            System.out.println("Không có kết quả tương ứng");
+        } else {
+            System.out.println("+-----+-------------------------+-------------------------+-------------------------+-------------------------+-------------------------+");
+            System.out.printf("|%5s|%25s|%25s|%25s|%25s|%25s|\n", "ID", "Username", "Full Name", "Email", "Department", "Position");
+            System.out.println("+-----+-------------------------+-------------------------+-------------------------+-------------------------+-------------------------+");
+            for (Account acc : accounts) {
+                String depName = Objects.nonNull(acc.getDepartment()) ? acc.getDepartment().getName() : "";
+                String posName = Objects.nonNull(acc.getPosition()) ? acc.getPosition().getName().name() : "";
+                System.out.printf("|%5s|%25s|%25s|%25s|%25s|%25s|\n"
+                        , acc.getId(), acc.getUsername(), acc.getFullName(), acc.getEmail()
+                        , depName, posName);
+            }
+            System.out.println("+-----+-------------------------+-------------------------+-------------------------+-------------------------+-------------------------+");
         }
     }
 
@@ -143,11 +170,7 @@ public class AccountFunction {
 
         while (true) {
             System.out.println("Nhập username: ");
-            String username = scanner.nextLine();
-            if (username.trim().length() < 5 || username.trim().length() > 50) {
-                System.err.println("Nhập username dài từ 5-50 kí tự");
-                continue;
-            }
+            String username = this.inputText(5, 50, "Độ dài username từ 5- 50 kí tự! Nhập lại:");
             if (accountController.checkUsernameExists(username, null)) {
                 System.err.println("Username này đã tồn tại");
                 continue;
@@ -158,22 +181,14 @@ public class AccountFunction {
 
         while (true) {
             System.out.println("Nhập fullname: ");
-            String fullName = scanner.nextLine();
-            if (fullName.trim().length() < 5 || fullName.trim().length() > 50) {
-                System.err.println("Nhập fullname dài từ 5-50 kí tự");
-                continue;
-            }
+            String fullName = this.inputText(5, 50, "Độ dài fullname từ 5- 50 kí tự! Nhập lại:");
             account.setFullName(fullName);
             break;
         }
 
         while (true) {
             System.out.println("Nhập email: ");
-            String email = scanner.nextLine();
-            if (email.trim().length() < 5 || email.trim().length() > 50) {
-                System.err.println("Nhập email dài từ 5-50 kí tự");
-                continue;
-            }
+            String email = this.inputText(5, 50, "Độ dài email từ 5- 50 kí tự! Nhập lại:");
             // a@lgcns.com
             if (!email.matches("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$")) {// dong@gmail.com
                 System.err.println("email không đúng định dạng");
@@ -230,26 +245,20 @@ public class AccountFunction {
             for (Position pos : positions) {
                 System.out.printf("ID: %s - Name: %s\n", pos.getId(), pos.getName());
             }
-            if (scanner.hasNextInt()) {
-                int posId = scanner.nextInt();
-                scanner.nextLine();
-
-                for (Position pos : positions) {
-                    if (pos.getId() == posId) {
-                        position = pos;
-                        break;
-                    }
-                }
-                if (Objects.isNull(position)) {
-                    System.out.println("PositionID ko tồn tại. Nhập lại: ");
-                } else {
-                    account.setPosition(position);
+            int posID = this.inputInt(false, 1, 5, "Vui lòng nhập số nguyên và lớn hơn 0! ");
+            for (Position pos : positions) {
+                if (pos.getId() == posID) {
+                    position = pos;
                     break;
                 }
-            } else {
-                System.out.println("Chọn sai. Chọn lại chức vụ!");
-                scanner.nextLine();
             }
+            if (Objects.isNull(position)) {
+                System.out.println("PositionID ko tồn tại. Nhập lại: ");
+            } else {
+                account.setPosition(position);
+                break;
+            }
+
         }
 
         boolean check = accountController.create(account);// username, fullName, email,depID, posID
@@ -276,4 +285,40 @@ public class AccountFunction {
         System.out.println("+-----+-------------------------+-------------------------+-------------------------+-------------------------+-------------------------+");
     }
 
+
+    public String inputText(Integer min, Integer max, String message) {
+        while (true) {
+            String inputText = scanner.nextLine();
+            if (inputText.trim().length() < min || inputText.trim().length() > max) {
+                System.err.println(message);
+                continue;
+            }
+            return inputText;
+        }
+    }
+
+    public int inputInt(boolean isNegative, Integer min, Integer max, String message) {
+        while (true) {
+            if (!scanner.hasNextInt()) {
+                scanner.nextLine();
+                System.err.println(message);
+            } else {
+                int inputInt = scanner.nextInt();
+                scanner.nextLine();
+                if (!isNegative && inputInt < 0) {
+                    System.err.println(message);
+                    continue;
+                }
+                if (Objects.nonNull(min) && inputInt < min) {
+                    System.out.println("Vui lòng nhập số nguyên > " + min);
+                    continue;
+                }
+                if (Objects.nonNull(max) && inputInt > max) {
+                    System.out.println("Vui lòng nhập số nguyên < " + max);
+                    continue;
+                }
+                return inputInt;
+            }
+        }
+    }
 }

@@ -105,7 +105,7 @@ public class AccountRepositoryImpl implements IAccountRepository {
     public boolean delete(int id) {
         try {
             Connection connection = JDBCUtils.getConnection();
-            String  sql = "delete from account where account_id = ?";
+            String sql = "delete from account where account_id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
 
@@ -123,7 +123,7 @@ public class AccountRepositoryImpl implements IAccountRepository {
         Connection connection = null;
         try {
             connection = JDBCUtils.getConnection();
-            String  sql = "select * from account where account_id = ?";
+            String sql = "select * from account where account_id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
 
@@ -144,7 +144,7 @@ public class AccountRepositoryImpl implements IAccountRepository {
         Connection connection = null;
         try {
             connection = JDBCUtils.getConnection();
-            String  sql = "select * from account where username = ?";
+            String sql = "select * from account where username = ?";
             if (Objects.nonNull(id)) {// update
                 sql += " and account_id != ?";
             }
@@ -170,7 +170,7 @@ public class AccountRepositoryImpl implements IAccountRepository {
         Connection connection = null;
         try {
             connection = JDBCUtils.getConnection();
-            String  sql = "select * from account where email = ?";
+            String sql = "select * from account where email = ?";
             if (Objects.nonNull(id)) {
                 sql += " and account_id != ?";
             }
@@ -189,5 +189,50 @@ public class AccountRepositoryImpl implements IAccountRepository {
             JDBCUtils.closeConnection(connection);
         }
         return false;
+    }
+
+    @Override
+    public List<Account> findByUsername(String usernameSearch) {
+        List<Account> accounts = new ArrayList<>();
+        try {
+            Connection connection = JDBCUtils.getConnection();
+            //  select *
+            //	from account acc
+            //	left join department dep on acc.department_id = dep.department_id
+            //	left join `position` pos on acc.position_id = pos.position_id
+            //	where username like concat(v_username);
+
+            String sql = "{CALL find_by_username(?)}";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, usernameSearch);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("account_id");
+                String username = resultSet.getString("username");
+                String fullName = resultSet.getString("full_name");
+                String email = resultSet.getString("email");
+
+                Department department = null;
+                Position position = null;
+                if (Objects.nonNull(resultSet.getString("department_id"))) {
+                    int departmentId = resultSet.getInt("department_id");
+                    String departmentName = resultSet.getString("department_name");
+                    department = new Department(departmentId, departmentName);
+                }
+                if (Objects.nonNull(resultSet.getString("position_name"))) {
+                    int positionId = resultSet.getInt("position_id");
+                    PositionName positionName = PositionName.valueOf(resultSet.getString("position_name"));
+                    position = new Position(positionId, positionName);
+                }
+                Account account = new Account(id, username, fullName, email, department, position);
+                accounts.add(account);
+            }
+            JDBCUtils.closeConnection(connection);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return accounts;
+
     }
 }

@@ -13,4 +13,6 @@ public interface IAccountService {
     boolean checkUsernameExists(String username, Integer id);
     boolean checkEmailExists(String email, Integer id);
     boolean checkIdExists(int id);
+
+    List<Account> findByUsername(String username);
 }

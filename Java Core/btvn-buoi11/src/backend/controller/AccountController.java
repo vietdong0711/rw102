@@ -41,4 +41,8 @@ public class AccountController {
     public boolean checkIdExists(int id) {
         return service.checkIdExists(id);
     }
+
+    public List<Account> findByUsername(String username) {
+        return service.findByUsername(username);
+    }
 }
