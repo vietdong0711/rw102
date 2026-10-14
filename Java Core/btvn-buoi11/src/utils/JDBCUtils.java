@@ -2,20 +2,19 @@ package utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class JDBCUtils {
     private Connection connection;
     // hàm kết nối đến DB
     public static Connection getConnection() {
         Connection connection = null;
-        String url = "jdbc:mysql://localhost:3306/rw102";
+        String url = "jdbc:mysql://localhost:3306/rw_102";
         String username = "root";
-        String password = "root";
+        String password = "dong";
         try {
             connection = DriverManager.getConnection(url, username, password);
-        } catch (Exception e) {
-            System.out.println("Kết nối không thành công");
-            e.printStackTrace();
+            } catch (SQLException e) {
         }
         return connection;
     }

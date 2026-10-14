@@ -6,6 +6,7 @@ import backend.controller.PositionController;
 import entity.Account;
 import entity.Department;
 import entity.Position;
+import utils.ScannerUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -170,7 +171,7 @@ public class AccountFunction {
 
         while (true) {
             System.out.println("Nhập username: ");
-            String username = this.inputText(5, 50, "Độ dài username từ 5- 50 kí tự! Nhập lại:");
+            String username = ScannerUtils.inputText(5, 50, "Độ dài username từ 5- 50 kí tự! Nhập lại:");
             if (accountController.checkUsernameExists(username, null)) {
                 System.err.println("Username này đã tồn tại");
                 continue;
@@ -181,19 +182,13 @@ public class AccountFunction {
 
         while (true) {
             System.out.println("Nhập fullname: ");
-            String fullName = this.inputText(5, 50, "Độ dài fullname từ 5- 50 kí tự! Nhập lại:");
+            String fullName = ScannerUtils.inputText(5, 50, "Độ dài fullname từ 5- 50 kí tự! Nhập lại:");
             account.setFullName(fullName);
             break;
         }
 
         while (true) {
-            System.out.println("Nhập email: ");
-            String email = this.inputText(5, 50, "Độ dài email từ 5- 50 kí tự! Nhập lại:");
-            // a@lgcns.com
-            if (!email.matches("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$")) {// dong@gmail.com
-                System.err.println("email không đúng định dạng");
-                continue;
-            }
+            String email = ScannerUtils.inputEmail();
             if (accountController.checkEmailExists(email, null)) {
                 System.err.println("email này đã tồn tại");
                 continue;
@@ -245,7 +240,7 @@ public class AccountFunction {
             for (Position pos : positions) {
                 System.out.printf("ID: %s - Name: %s\n", pos.getId(), pos.getName());
             }
-            int posID = this.inputInt(false, 1, 5, "Vui lòng nhập số nguyên và lớn hơn 0! ");
+            int posID = ScannerUtils.inputInt(false, 1, 5, "Vui lòng nhập số nguyên và lớn hơn 0! ");
             for (Position pos : positions) {
                 if (pos.getId() == posID) {
                     position = pos;
@@ -283,42 +278,5 @@ public class AccountFunction {
                     , depName, posName);
         }
         System.out.println("+-----+-------------------------+-------------------------+-------------------------+-------------------------+-------------------------+");
-    }
-
-
-    public String inputText(Integer min, Integer max, String message) {
-        while (true) {
-            String inputText = scanner.nextLine();
-            if (inputText.trim().length() < min || inputText.trim().length() > max) {
-                System.err.println(message);
-                continue;
-            }
-            return inputText;
-        }
-    }
-
-    public int inputInt(boolean isNegative, Integer min, Integer max, String message) {
-        while (true) {
-            if (!scanner.hasNextInt()) {
-                scanner.nextLine();
-                System.err.println(message);
-            } else {
-                int inputInt = scanner.nextInt();
-                scanner.nextLine();
-                if (!isNegative && inputInt < 0) {
-                    System.err.println(message);
-                    continue;
-                }
-                if (Objects.nonNull(min) && inputInt < min) {
-                    System.out.println("Vui lòng nhập số nguyên > " + min);
-                    continue;
-                }
-                if (Objects.nonNull(max) && inputInt > max) {
-                    System.out.println("Vui lòng nhập số nguyên < " + max);
-                    continue;
-                }
-                return inputInt;
-            }
-        }
     }
 }

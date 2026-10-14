@@ -2,6 +2,7 @@ package frontend;
 
 import backend.controller.AccountController;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 public class DepartmentFunction {
