@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 public class JDBCUtils {
     private Connection connection;
+
     // hàm kết nối đến DB
     public static Connection getConnection() {
         Connection connection = null;
@@ -14,7 +15,8 @@ public class JDBCUtils {
         String password = "dong";
         try {
             connection = DriverManager.getConnection(url, username, password);
-            } catch (SQLException e) {
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return connection;
     }
