@@ -48,9 +48,13 @@ public class DepartmentServiceImpl implements IDepartmentService {
                 String[] arrs = line.split(",");
                 // chuyển dữ liệu trong file thành các dữ liệu liên quan đến department
                 Department department = new Department(arrs[0]);
-                // gọi xuống repo để luu vao DB
-                repository.create(department);
+//                // gọi xuống repo để luu vao DB
+//                repository.create(department);
+                departments.add(department);
             }
+            // thêm ds department vào DB
+            repository.createAll(departments);
+
             return "Import thành công";
         } catch (Exception e) {
             return "Import thất bại";
