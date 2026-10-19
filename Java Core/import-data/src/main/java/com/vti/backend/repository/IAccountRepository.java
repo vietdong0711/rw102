@@ -14,4 +14,7 @@ public interface IAccountRepository {
     boolean checkEmailExists(String email, Integer id);
 
     List<Account> findByUsername(String username);
+
+
+    void createAll(List<Account> accounts);
 }

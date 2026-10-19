@@ -235,4 +235,29 @@ public class AccountRepositoryImpl implements IAccountRepository {
         return accounts;
 
     }
+
+    @Override
+    public void createAll(List<Account> accounts) {
+        Connection connection = null;
+        try {
+            connection = JDBCUtils.getConnection();
+            String sql = "insert into account(email, username, full_name, department_id, position_id)\n" +
+                    "values (?, ?, ?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            for (Account account : accounts) {
+                statement.setString(1, account.getEmail());
+                statement.setString(2, account.getUsername());
+                statement.setString(3, account.getFullName());
+                statement.setInt(4, account.getDepartment().getId());
+                statement.setInt(5, account.getPosition().getId());
+                statement.addBatch();
+            }
+
+            statement.executeBatch();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtils.closeConnection(connection);
+        }
+    }
 }

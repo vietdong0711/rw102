@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface IDepartmentRepository {
     List<Department> findAll();
+    Department findById(int id);
     boolean create(Department department);
 
     void createAll(List<Department> departments);

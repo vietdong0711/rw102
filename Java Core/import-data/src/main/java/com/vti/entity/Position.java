@@ -1,22 +1,22 @@
 package com.vti.entity;
 
 public class Position {
-    private int id;
+    private Integer id;
     private PositionName name;
 
     public Position() {
     }
 
-    public Position(int id, PositionName name) {
+    public Position(Integer id, PositionName name) {
         this.id = id;
         this.name = name;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

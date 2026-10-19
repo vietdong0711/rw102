@@ -45,4 +45,8 @@ public class AccountController {
     public List<Account> findByUsername(String username) {
         return service.findByUsername(username);
     }
+
+    public String importCSV(String path) {
+        return service.importCSV(path);
+    }
 }

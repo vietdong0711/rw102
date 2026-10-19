@@ -10,9 +10,9 @@ public class JDBCUtils {
     // hàm kết nối đến DB
     public static Connection getConnection() {
         Connection connection = null;
-        String url = "jdbc:mysql://localhost:3306/rw_102";
+        String url = "jdbc:mysql://localhost:3306/rw102";
         String username = "root";
-        String password = "dong";
+        String password = "root";
         try {
             connection = DriverManager.getConnection(url, username, password);
         } catch (SQLException e) {

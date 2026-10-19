@@ -15,4 +15,6 @@ public interface IAccountService {
     boolean checkIdExists(int id);
 
     List<Account> findByUsername(String username);
+
+    String importCSV(String path);
 }

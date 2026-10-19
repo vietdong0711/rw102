@@ -33,7 +33,8 @@ public class AccountFunction {
             System.out.println("3. Xóa account theo id");
             System.out.println("4. Update account theo id");
             System.out.println("5. Tìm kiếm theo username");
-            System.out.println("6. Thoát");
+            System.out.println("6. Import file CSV");
+            System.out.println("7. Thoát");
             String choice = scanner.nextLine();
             switch (choice) {
                 case "1":
@@ -51,12 +52,24 @@ public class AccountFunction {
                 case "5":
                     this.findByUsername();
                 case "6":
+                    this.importCSV();
+                    break;
+                case "7":
                     return;
 //                    System.exit(0);
                 default:
                     System.out.println("Chọn sai! Chọn lại!");
             }
         }
+    }
+
+    private void importCSV() {
+        System.out.println("==== CHỨC NĂNG IMPORT ACCOUNT ====");
+        // C:\Users\FPT\Desktop\rw102\Java Core\csv\input_department.csv
+        System.out.println("Nhập đường dẫn file CSV: ");
+        String path = scanner.nextLine();
+        String message = accountController.importCSV(path);
+        System.out.println(message);
     }
 
     private void findByUsername() {

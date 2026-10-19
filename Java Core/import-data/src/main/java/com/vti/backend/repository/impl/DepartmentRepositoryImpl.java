@@ -38,6 +38,29 @@ public class DepartmentRepositoryImpl implements IDepartmentRepository {
     }
 
     @Override
+    public Department findById(int id) {
+        Connection connection = null;
+        try {
+            connection = JDBCUtils.getConnection();
+            String sql = "select * from department where department_id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int departmentId = resultSet.getInt("department_id");
+                String departmentName = resultSet.getString("department_name");
+                Department department = new Department(departmentId, departmentName);
+                return department;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtils.closeConnection(connection);
+        }
+        return null;
+    }
+
+    @Override
     public boolean create(Department department) {
         Connection connection = null;
         try {
