@@ -1,16 +1,22 @@
 package com.vti.backend.service.impl;
 
 
+import com.vti.backend.common.StringCommon;
 import com.vti.backend.repository.IDepartmentRepository;
 import com.vti.backend.repository.impl.DepartmentRepositoryImpl;
 import com.vti.backend.service.IDepartmentService;
 import com.vti.entity.Department;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class DepartmentServiceImpl implements IDepartmentService {
     private IDepartmentRepository repository;
@@ -42,21 +48,68 @@ public class DepartmentServiceImpl implements IDepartmentService {
             String line;
             List<Department> departments = new ArrayList<>();
             header = br.readLine();//doc dòng đầu tiêu header (buổi sau dùng)
-            // nếu line đọc ra có dữ liệu thfi sẽ phân tích dữ liệu để lấy ra cac thông tin
-            while ((line = br.readLine()) != null) {
-                System.out.println(line);
-                String[] arrs = line.split(",");
-                // chuyển dữ liệu trong file thành các dữ liệu liên quan đến department
-                Department department = new Department(arrs[0]);
-//                // gọi xuống repo để luu vao DB
-//                repository.create(department);
-                departments.add(department);
-            }
-            // thêm ds department vào DB
-            repository.createAll(departments);
 
-            return "Import thành công";
+            List<String> dataErrors = new ArrayList<>();
+            List<Department> deps = repository.findAll();
+            // username
+            Map<String, Department> mapByUsername = new HashMap<>();// mapByUsername theo username
+            for (Department department : deps) {
+                mapByUsername.put(department.getName(), department);
+            }
+            while ((line = br.readLine()) != null) {
+                List<String> errors = new ArrayList<>();
+                String[] arrs = line.split(",");
+                String departmentName = arrs[0];
+                // validation   5-50 kí tự,   ko chứa kí tự đặc biệt, unique
+                if(Objects.isNull(departmentName) || departmentName.trim().isEmpty()
+                        || departmentName.trim().length() <5 || departmentName.trim().length() > 50) {
+                    errors.add("Tên phòng ban phải từ 5-50 kí tự");
+                }
+
+                // chỉ dc nhập số hoặc chữ (0-9  a-z  A-Z)
+                if (!departmentName.trim().matches(StringCommon.DEPARTMENT_NAME_REGEX)) {
+                    errors.add("Tên phòng ban chỉ được nhập số hoặc chữ");
+                }
+
+                // unique(trùng trong file, trùng trong DB)
+                if (mapByUsername.get(departmentName) != null) {
+                    errors.add("Tên phòng ban đã tồn tại");
+                }
+
+                if (errors.isEmpty()) {  // chưa có ptu nào  = row đó ko có lỗi
+                    Department department = new Department(departmentName);
+                    departments.add(department);
+                    mapByUsername.put(departmentName, department);// thêm vào map để hỗ trợ validation
+                } else {
+                    String rowError = departmentName + "," + String.join("-", errors);
+                    dataErrors.add(rowError);
+                }
+            }
+
+            if (!departments.isEmpty()) {// phải có dữ liệu thfi mới gọi DB để lưu
+                repository.createAll(departments);
+            }
+
+            // xuất ra file lỗi
+            if (!dataErrors.isEmpty()) {// có ds lỗi thì mới xuất file lỗi
+                // địa chỉ xuất l
+                String pathErr = "C:\\Users\\Admin\\Desktop\\rw102\\Java Core\\csv\\error_department.csv";
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter(pathErr))) {
+                    bw.write(header +"," + "error_messages");
+                    bw.newLine();
+                    for (String error : dataErrors) {
+                        bw.write(error);
+                        bw.newLine();
+                    }
+                    bw.flush();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            return String.format("Import thành công %d, import thất bại %d, %s"
+                    , departments.size(), dataErrors.size(), !dataErrors.isEmpty() ?"Đã xuat ra file lỗi error_department.csv" :"");
         } catch (Exception e) {
+            e.printStackTrace();
             return "Import thất bại";
         }
     }

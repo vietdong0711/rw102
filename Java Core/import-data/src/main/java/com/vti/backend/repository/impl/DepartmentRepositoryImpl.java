@@ -96,4 +96,24 @@ public class DepartmentRepositoryImpl implements IDepartmentRepository {
             JDBCUtils.closeConnection(connection);
         }
     }
+
+    @Override
+    public boolean existByName(String name) {
+        Connection connection = null;
+        try {
+            connection = JDBCUtils.getConnection();
+            String sql = "select * from department where department_name=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtils.closeConnection(connection);
+        }
+        return false;
+    }
 }
