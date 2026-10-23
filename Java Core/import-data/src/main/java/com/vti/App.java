@@ -11,6 +11,6 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println("phòngban 1".matches("^[\\p{L}0-9 ]+$"));
+        System.out.println("100".matches("^[0-9]+$"));
     }
 }

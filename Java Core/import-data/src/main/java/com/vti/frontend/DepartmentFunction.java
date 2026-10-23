@@ -73,7 +73,7 @@ public class DepartmentFunction {
     }
 
     private void create() {
-        System.out.println("====CHỨC NĂNG TẠO MỚI DEPARTMENT ====");
+        System.out.println("==== CHỨC NĂNG TẠO MỚI DEPARTMENT ====");
     }
 
     private void findAll() {

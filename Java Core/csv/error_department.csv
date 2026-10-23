@@ -1,4 +1,5 @@
 department_name,error_messages
+phòng ban 1,Tên phòng ban đã tồn tại
 HR123455,Tên phòng ban đã tồn tại
 123,Tên phòng ban phải từ 5-50 kí tự
 123456789012345678901234567890123456789012345678901234567890,Tên phòng ban phải từ 5-50 kí tự
