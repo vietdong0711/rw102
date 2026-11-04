@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Hello</title>
+
+        <style>
+            th,
+            td,
+            table {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+        </style>
+    </head>
+    <body>
+        <form>
+            <fieldset>
+                <legend>ĐĂNG KÍ TÀI KHOẢN</legend>
+
+                <div>
+                    <input type="text" name="fullname" autocomplete="off" placeholder="Nhập họ tên" />
+                </div>
+
+                <div>
+                    <input type="email" name="email" autocomplete="off" placeholder="Nhập email" />
+                </div>
+
+                <div>
+                    <input type="text" name="username" autocomplete="off" placeholder="Nhập username" />
+                </div>
+                <div>
+                    <input type="password" name="password" autocomplete="off" placeholder="Nhập password    " />
+                </div>
+
+                <div>
+                    <select name="gender">
+                        <option value="">Nam</option>
+                        <option value="">Nữ</option>
+                        <option value="">Khác</option>
+                    </select>
+                </div>
+
+                <div><input type="radio" name="marid" />Độc thân <input type="radio" name="marid" />Có gia đình</div>
+
+                <div>
+                    <input type="checkbox" name="sothich" />Game <input type="checkbox" name="sothich" />Thể thao <input type="checkbox" name="sothich" />Khác
+                </div>
+
+                <input type="reset" value="Reset form" />
+                <button>Đăng kí</button>
+            </fieldset>
+        </form>
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>ABC</td>
+                <td>18</td>
+            </tr>
+        </table>
+    </body>
+</html>
